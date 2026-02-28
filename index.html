@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Guiri Más Odiada</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Barlow+Condensed:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --off-black: #111111;
+    --deep: #1a1a1a;
+    --card: #161616;
+    --border: #2a2a2a;
+    --red: #e8001d;
+    --red-hot: #ff0a2d;
+    --red-dim: rgba(232, 0, 29, 0.12);
+    --cream: #f5f0e8;
+    --cream-dim: rgba(245, 240, 232, 0.06);
+    --gold: #c9a84c;
+    --text: #e8e4dc;
+    --muted: #7a7570;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-cond: 'Barlow Condensed', sans-serif;
+    --font-body: 'Barlow', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--black);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(232,0,29,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 100% 100%, rgba(201,168,76,0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+
+  /* ──────────── HEADER ──────────── */
+  header {
+    padding: 32px 0 24px;
+    text-align: center;
+  }
+
+  .logo {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 8vw, 3.6rem);
+    letter-spacing: 0.04em;
+    color: var(--cream);
+    line-height: 1;
+    position: relative;
+  }
+
+  .logo .accent {
+    color: var(--red);
+    display: block;
+    font-size: 0.45em;
+    letter-spacing: 0.35em;
+    font-family: var(--font-cond);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    color: var(--gold);
+  }
+
+  .logo-line {
+    display: block;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+    margin: 10px auto 0;
+    width: 80%;
+  }
+
+  /* Nav tabs */
+  nav {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-cond);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 10px 22px;
+    position: relative;
+    transition: color 0.25s;
+  }
+
+  .tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.25s ease;
+  }
+
+  .tab-btn:hover { color: var(--cream); }
+
+  .tab-btn.active {
+    color: var(--cream);
+  }
+
+  .tab-btn.active::after {
+    transform: scaleX(1);
+  }
+
+  /* ──────────── CARD ──────────── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-top: 28px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.02),
+      0 24px 80px rgba(0,0,0,0.6),
+      0 0 60px rgba(232,0,29,0.04);
+  }
+
+  /* ──────────── TABS ──────────── */
+  .tab-panel {
+    display: none;
+    animation: fadeIn 0.35s ease;
+  }
+
+  .tab-panel.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ──────────── INICIO ──────────── */
+  .profile-section {
+    padding: 40px 32px 32px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .avatar-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 24px;
+  }
+
+  .avatar {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: 2px solid var(--border);
+    background: var(--deep);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* SVG placeholder avatar */
+  .avatar-placeholder {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: linear-gradient(160deg, #2a1a1a 0%, #1a1010 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .avatar-placeholder svg {
+    width: 80px;
+    height: 80px;
+    opacity: 0.7;
+  }
+
+  .avatar-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1.5px solid transparent;
+    background: linear-gradient(135deg, var(--red), var(--gold), transparent, var(--red)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    animation: spin 8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .badge {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    background: var(--red);
+    color: white;
+    font-family: var(--font-cond);
+    font-size: 0.55rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 2px;
+    z-index: 2;
+  }
+
+  .profile-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+    letter-spacing: 0.03em;
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .profile-name span { color: var(--red); }
+
+  .tagline {
+    font-family: var(--font-cond);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .bio {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(245,240,232,0.75);
+    max-width: 480px;
+    margin: 0 auto 24px;
+  }
+
+  .bio em {
+    color: var(--cream);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* Stats */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--border);
+  }
+
+  .stat {
+    padding: 20px 12px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .stat:last-child { border-right: none; }
+  .stat:hover { background: var(--cream-dim); }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    letter-spacing: 0.02em;
+    color: var(--cream);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-value.red { color: var(--red); }
+
+  .stat-label {
+    font-family: var(--font-cond);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* Quote block */
+  .quote-block {
+    padding: 28px 32px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    background: var(--red-dim);
+    position: relative;
+  }
+
+  .quote-block::before {
+    content: '"';
+    position: absolute;
+    top: 8px;
+    left: 28px;
+    font-family: var(--font-display);
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--red);
+    opacity: 0.2;
+  }
+
+  .quote-text {
+    font-family: var(--font-cond);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    color: var(--cream);
+    font-style: italic;
+  }
+
+  /* ──────────── LINKS ──────────── */
+  .links-section {
+    padding: 36px 28px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    letter-spacing: 0.06em;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+
+  .section-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+
+  .social-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .social-btn {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 3px;
+    padding: 14px 18px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .social-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.05);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .social-btn:hover::before { opacity: 1; }
+  .social-btn:hover {
+    transform: translateX(4px);
+    box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+  }
+
+  .social-btn .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-right: 14px;
+  }
+
+  .social-btn .info {
+    flex: 1;
+  }
+
+  .social-btn .platform-name {
+    font-family: var(--font-cond);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream);
+    display: block;
+  }
+
+  .social-btn .platform-sub {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.45);
+    display: block;
+    margin-top: 1px;
+  }
+
+  .social-btn .arrow {
+    color: rgba(245,240,232,0.3);
+    font-size: 0.8rem;
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .social-btn:hover .arrow {
+    color: var(--cream);
+    transform: translateX(3px);
+  }
+
+  /* Platform colors */
+  .btn-youtube { background: linear-gradient(135deg, #1a0000, #120000); }
+  .btn-youtube .icon { background: rgba(255,0,0,0.15); color: #ff4444; }
+
+  .btn-instagram { background: linear-gradient(135deg, #1a0f1a, #100a12); }
+  .btn-instagram .icon {
+    background: linear-gradient(45deg, rgba(193,53,132,0.2), rgba(88,81,219,0.2));
+    color: #e1306c;
+  }
+
+  .btn-tiktok { background: linear-gradient(135deg, #0a0a12, #080812); }
+  .btn-tiktok .icon { background: rgba(105,201,208,0.1); color: #69c9d0; }
+
+  .btn-rednote { background: linear-gradient(135deg, #1a0008, #12000a); }
+  .btn-rednote .icon { background: rgba(255,50,80,0.15); color: #ff3250; }
+
+  .btn-onlyfans { background: linear-gradient(135deg, #0a0b12, #06070e); }
+  .btn-onlyfans .icon { background: rgba(0,174,239,0.1); color: #00aeef; }
+
+  .btn-patreon { background: linear-gradient(135deg, #1a0f00, #120a00); }
+  .btn-patreon .icon { background: rgba(255,102,0,0.12); color: #ff6600; }
+
+  /* ──────────── CONTACTO ──────────── */
+  .contact-section {
+    padding: 36px 28px;
+  }
+
+  .collab-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 16px 0 28px;
+  }
+
+  .tag {
+    font-family: var(--font-cond);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+
+  .tag:hover { border-color: var(--red); color: var(--cream); }
+  .tag.hot { border-color: rgba(232,0,29,0.4); color: rgba(232,0,29,0.8); }
+
+  /* Form */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 480px) {
+    .form-grid { grid-template-columns: 1fr; }
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-family: var(--font-cond);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  input, select, textarea {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 11px 14px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a7570' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  select option { background: #1a1a1a; }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: rgba(232,0,29,0.5);
+    background: rgba(232,0,29,0.03);
+  }
+
+  textarea { resize: vertical; min-height: 110px; }
+
+  .submit-btn {
+    width: 100%;
+    margin-top: 16px;
+    padding: 14px 24px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-family: var(--font-cond);
+    font-size: 0.9rem;
+    font-weight: 900;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+  }
+
+  .submit-btn:hover::after { transform: translateX(100%); }
+  .submit-btn:hover { background: var(--red-hot); }
+  .submit-btn:active { transform: scale(0.98); }
+
+  /* Contact alt */
+  .contact-alt {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-email {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 300;
+    transition: color 0.2s;
+  }
+
+  .contact-email:hover { color: var(--cream); }
+
+  .contact-email .icon-wrap {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: var(--red);
+    flex-shrink: 0;
+  }
+
+  .social-mini {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .social-mini a {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .social-mini a:hover {
+    border-color: var(--red);
+    color: var(--red);
+    background: var(--red-dim);
+  }
+
+  /* ──────────── FOOTER ──────────── */
+  footer {
+    text-align: center;
+    padding: 28px 0 0;
+    font-family: var(--font-cond);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  footer span { color: var(--red); }
+
+  /* ──────────── RESPONSIVE ──────────── */
+  @media (max-width: 480px) {
+    .profile-section { padding: 30px 20px 24px; }
+    .links-section, .contact-section { padding: 28px 20px; }
+    .stats { grid-template-columns: repeat(3, 1fr); }
+    .stat-value { font-size: 1.4rem; }
+    .quote-block { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <header>
+    <div class="logo">
+      <span class="accent">✦ La Guiri ✦</span>
+      Más Odiada
+      <span class="logo-line"></span>
+    </div>
+
+    <nav>
+      <button class="tab-btn active" data-tab="inicio">Inicio</button>
+      <button class="tab-btn" data-tab="links">Links</button>
+      <button class="tab-btn" data-tab="contacto">Contacto</button>
+    </nav>
+  </header>
+
+  <div class="card">
+
+    <!-- ── INICIO ── -->
+    <div id="tab-inicio" class="tab-panel active">
+      <div class="profile-section">
+        <div class="avatar-wrapper">
+          <div class="avatar-ring"></div>
+          <div class="avatar-placeholder">
+            <!-- Stylized female silhouette -->
+            <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="32" r="22" fill="rgba(232,0,29,0.15)" stroke="rgba(232,0,29,0.3)" stroke-width="1"/>
+              <ellipse cx="50" cy="100" rx="32" ry="28" fill="rgba(232,0,29,0.08)" stroke="rgba(232,0,29,0.2)" stroke-width="1"/>
+              <circle cx="50" cy="32" r="18" fill="rgba(245,240,232,0.08)"/>
+              <path d="M50 14 Q60 20 58 32 Q56 44 50 48 Q44 44 42 32 Q40 20 50 14Z" fill="rgba(245,240,232,0.12)"/>
+              <path d="M18 100 Q25 72 50 68 Q75 72 82 100" fill="rgba(245,240,232,0.06)"/>
+            </svg>
+          </div>
+          <span class="badge">🔥 Viral</span>
+        </div>
+
+        <h1 class="profile-name">La Guiri <span>Más Odiada</span></h1>
+        <p class="tagline">Extranjera. Polémica. Imparable.</p>
+
+        <p class="bio">
+          Llegué a España sin que nadie me invitara, y <em>aquí me quedo</em>. Contenido sin filtros, opiniones sin permiso y una forma de ver este país que incomoda a los que llevan toda la vida mirándose el ombligo. <em>No vine a caerle bien a nadie</em> — pero parece que no podéis dejar de verme.
+        </p>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-value red">300K</span>
+          <span class="stat-label">YouTube</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">127K</span>
+          <span class="stat-label">Seguidores</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value red">∞</span>
+          <span class="stat-label">Polémica</span>
+        </div>
+      </div>
+
+      <div class="quote-block">
+        <p class="quote-text">Si me odias, al menos me conoces. Bienvenido al club.</p>
+      </div>
+    </div>
+
+    <!-- ── LINKS ── -->
+    <div id="tab-links" class="tab-panel">
+      <div class="links-section">
+        <h2 class="section-title">Conéctate</h2>
+        <p class="section-sub">Encuéntrame donde más duele</p>
+
+        <div class="social-grid">
+
+          <a href="#" class="social-btn btn-youtube">
+            <div class="icon"><i class="fab fa-youtube"></i></div>
+            <div class="info">
+              <span class="platform-name">YouTube</span>
+              <span class="platform-sub">300K suscriptores · El origen</span>
+            </div>
+            <i class="fas fa-arrow-right arrow"></i>
+          </a>
+
+          <a href="#" class="social-btn btn-instagram">
+            <div class="icon"><i class="fab fa-instagram"></i></div>
+            <div class="info">
+              <span class="platform-name">Instagram</span>
+              <span class="platform-sub">Fotos, stories & controversia diaria</span>
+            </div>
+            <i class="fas fa-arrow-right arrow"></i>
+          </a>
+
+          <a href="#" class="social-btn btn-tiktok">
+            <div class="icon"><i class="fab fa-tiktok"></i></div>
+            <div class="info">
+              <span class="platform-name">TikTok</span>
+              <span class="platform-sub">Virales en menos de 60 segundos</span>
+            </div>
+            <i class="fas fa-arrow-right arrow"></i>
+          </a>
+
+          <a href="#" class="social-btn btn-rednote">
+            <div class="icon"><i class="fas fa-circle-dot"></i></div>
+            <div class="info">
+              <span class="platform-name">RedNote</span>
+              <span class="platform-sub">小红书 · Para los que me buscan allá</span>
+            </div>
+            <i class="fas fa-arrow-right arrow"></i>
+          </a>
+
+          <a href="#" class="social-btn btn-onlyfans">
+            <div class="icon"><i class="fas fa-lock-open"></i></div>
+            <div class="info">
+              <span class="platform-name">OnlyFans</span>
+              <span class="platform-sub">El contenido que no puedes ver gratis</span>
+            </div>
+            <i class="fas fa-arrow-right arrow"></i>
+          </a>
+
+          <a href="#" class="social-btn btn-patreon">
+            <div class="icon"><i class="fab fa-patreon"></i></div>
+            <div class="info">
+              <span class="platform-name">Patreon</span>
+              <span class="platform-sub">Apoya la polémica. Vale la pena.</span>
+            </div>
+            <i class="fas fa-arrow-right arrow"></i>
+          </a>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CONTACTO ── -->
+    <div id="tab-contacto" class="tab-panel">
+      <div class="contact-section">
+        <h2 class="section-title">¿Quieres colaborar?</h2>
+        <p class="section-sub">Acepto propuestas. Rechazo el aburrimiento.</p>
+
+        <div class="collab-tags">
+          <span class="tag hot">Brand deals</span>
+          <span class="tag">Prensa</span>
+          <span class="tag">Podcasts</span>
+          <span class="tag hot">Eventos</span>
+          <span class="tag">Entrevistas</span>
+          <span class="tag">Otros</span>
+        </div>
+
+        <form onsubmit="return false;">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" placeholder="Tu nombre">
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" placeholder="tu@email.com">
+            </div>
+            <div class="form-group">
+              <label for="tipo">Tipo de colaboración</label>
+              <select id="tipo">
+                <option value="">Selecciona...</option>
+                <option>Brand / Publicidad</option>
+                <option>Prensa / Media</option>
+                <option>Eventos / Presencial</option>
+                <option>Otros</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="presupuesto">Presupuesto (€)</label>
+              <input type="text" id="presupuesto" placeholder="Aproximado">
+            </div>
+            <div class="form-group full">
+              <label for="mensaje">Cuéntame</label>
+              <textarea id="mensaje" placeholder="Explícame tu propuesta. Sé directo/a."></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">Enviar propuesta →</button>
+        </form>
+
+        <div class="contact-alt">
+          <a href="mailto:colaboraciones@laguirimasodiada.com" class="contact-email">
+            <div class="icon-wrap"><i class="fas fa-envelope"></i></div>
+            colaboraciones@laguirimasodiada.com
+          </a>
+          <div class="social-mini">
+            <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /card -->
+
+  <footer>
+    <span>La Guiri Más Odiada</span> © 2025 — Todos los derechos reservados
+  </footer>
+
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      document.getElementById('tab-' + target).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
